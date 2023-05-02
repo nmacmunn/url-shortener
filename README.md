@@ -85,7 +85,7 @@ Note: you may need to remove the last line `//# sourceMappingURL=library.js.map`
 
 ## Docker
 
-1. Install Docker for your platform
+1. Install [Docker](https://docs.docker.com/engine/install/) for your platform
 2. Kill `npm run dev` running in the `app` and `api` directories
 3. Build and start with docker compose:
 
