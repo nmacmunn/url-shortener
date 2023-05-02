@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 services:
   app:
     build: ./app
@@ -6,6 +6,8 @@ services:
       - ./app/.env
     environment:
       - PUBLIC_API_ORIGIN_NODE=http://host.docker.internal:3001
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "3000:3000"
   api:
