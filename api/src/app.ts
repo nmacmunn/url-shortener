@@ -100,10 +100,10 @@ app.post("/url/validate", validateURL, async (req, res) => {
 app.get("/url/:slug", async (req, res) => {
   const link = await getLinkBySlug(req.params.slug);
   if (!link) {
-    return res.status(400).json({ error: "Link not found" });
+    return res.status(400).json({ error: "That link doesn't exist" });
   }
   if (link.deletedAt !== null) {
-    return res.status(400).json({ error: "Link has been deleted" });
+    return res.status(400).json({ error: "That link has been deleted" });
   }
   return res.json({ url: link.url });
 });

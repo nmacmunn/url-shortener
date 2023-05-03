@@ -69,7 +69,7 @@ export async function getLink(id: string): Promise<Link | null | { error: string
   }
 }
 
-export async function getURL(slug: string): Promise<{ url?: string } | { error: string }> {
+export async function getURL(slug: string): Promise<{ url: string } | { error: string }> {
   try {
     const response = await fetch(`${origin}/url/${slug}`);
     return response.json();

@@ -197,7 +197,7 @@ describe("GET /url/:slug", () => {
   it("responds with an error if link doesn't exist", async () => {
     const response = await request(app).get(`/url/google`);
     expect(response.status).toBe(400);
-    expect(response.body).toStrictEqual({ error: "Link not found" });
+    expect(response.body).toStrictEqual({ error: "That link doesn't exist" });
   });
   it("responds with an error if link has been deleted", async () => {
     const url = "https://google.com";
@@ -205,7 +205,9 @@ describe("GET /url/:slug", () => {
     await prisma.link.create({ data: { deletedAt: new Date(), slug, url } });
     const response = await request(app).get(`/url/${slug}`);
     expect(response.status).toBe(400);
-    expect(response.body).toStrictEqual({ error: "Link has been deleted" });
+    expect(response.body).toStrictEqual({
+      error: "That link has been deleted",
+    });
   });
 });
 

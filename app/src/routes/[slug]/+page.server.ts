@@ -10,10 +10,6 @@ export const load = (async ({ params }) => {
   if ("error" in result) {
     throw error(400, result.error);
   }
-  const { url } = result;
-  if (!url) {
-    throw redirect(302, "/nah");
-  }
   countView(params.slug);
-  throw redirect(302, url);
+  throw redirect(302, result.url);
 }) satisfies PageServerLoad;
