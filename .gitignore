@@ -1,6 +1,6 @@
 .env
+.env.test
 .svelte-kit
-.vscode
 build
 node_modules
-/data
+tmp

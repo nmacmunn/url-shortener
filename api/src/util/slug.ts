@@ -1,7 +1,5 @@
 import { getLinkBySlug } from "./db";
 
-const defaultSlugLength = 6;
-
 /**
  * Check whether the slug is valid and available
  */
@@ -15,17 +13,4 @@ export async function checkSlug(slug: string) {
   if (await getLinkBySlug(slug)) {
     return "Slug is already in use";
   }
-}
-
-/**
- * Generate a (hopefully) unique slug
- */
-export function generateSlug() {
-  let result = "";
-  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < defaultSlugLength; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-  return result;
 }

@@ -5,9 +5,7 @@ services:
     env_file:
       - ./app/.env
     environment:
-      - PUBLIC_API_ORIGIN_NODE=http://host.docker.internal:3001
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - PUBLIC_API_ORIGIN_NODE=${PUBLIC_API_ORIGIN_NODE}
     ports:
       - "3000:3000"
   api:
@@ -15,8 +13,12 @@ services:
     env_file:
       - ./api/.env
     environment:
-      - DATABASE_URL=file:/usr/src/app/data/dev.db
+      - PGHOST=${PGHOST}
     ports:
       - "3001:3001"
-    volumes:
-      - ./data:/usr/src/app/data
+  postgres:
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    image: postgres
+    ports:
+      - "5432:5432"

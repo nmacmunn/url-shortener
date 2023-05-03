@@ -10,7 +10,8 @@ import {
   getLinkBySlug,
   markLinkDeleted,
 } from "./util/db";
-import { checkSlug, generateSlug } from "./util/slug";
+import { checkSlug } from "./util/slug";
+import { randomString } from "./util/string";
 
 export const app = express();
 
@@ -43,7 +44,7 @@ const validateSlug = validate("slug", "string");
  * Create a new link
  */
 app.post("/link", validateURL, validateSlug, async (req, res) => {
-  const slug = req.body.slug || generateSlug();
+  const slug = req.body.slug || randomString(6);
   const url = withProtocol(req.body.url);
   let error = await checkSlug(slug);
   error = error || (await fetchURL(url));

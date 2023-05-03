@@ -13,4 +13,3 @@ exclude:
     every-label: ^\b$
     excluded: true
     recursive: false
-appmap_dir: ../data/appmap

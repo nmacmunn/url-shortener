@@ -1,9 +1,23 @@
 # URL Shortener
 
-This repo contains two TypeScript codebases to make a simple URL shortener.
+A simple URL shortener featuring:
+
+- Custom slugs (aliases)
+- View counting
+- Deletable links
+- Account-less link management
+
+This repo contains two TypeScript codebases.
 
 - `api` provides an Express REST API
 - `app` is a SvelteKit web app that uses the API
+
+Other tech details:
+
+- Docker for containerization
+- PostgreSQL for persistence
+- Prisma for migrations <code><strike>and ORM</strike></code>
+- AppMap for dynamic analysis
 
 ## Install
 
@@ -14,15 +28,32 @@ $ git clone https://github.com/nmacmunn/url-shortener.git
 $ cd url-shortener
 ```
 
+### Database
+
+Install [Docker](https://docs.docker.com/engine/install/) for your platform and pull the postgres image.
+
+```
+$ docker pull postgres
+```
+
+Start the database so we can run migrations in the next step.
+
+```
+docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
+```
+
 ### API
 
 ```
 $ cd api
 $ npm install
 $ cp .env.example .env
+$ cp .env.example .env.test
 ```
 
-Generate an API key for Google Safe Browsing API using the instructions [here](https://developers.google.com/safe-browsing/v4/get-started) and set GOOGLE_API_KEY.
+Generate an API key for Google Safe Browsing API using the instructions [here](https://developers.google.com/safe-browsing/v4/get-started) and set GOOGLE_API_KEY in `.env` and `.env.test`.
+
+Set PGDATABASE to something else in `.env.test` otherwise running tests will clobber your development database.
 
 Initialize the database
 
@@ -41,9 +72,7 @@ $ cp .env.example .env
 
 ## Develop
 
-Run `npm run dev` in each of the `api` and `app` folders.
-
-[Open in browser](http://127.0.0.1:3000)
+With the database running, start `npm run dev` in each of the `api` and `app` folders and then open http://127.0.0.1:3000
 
 ## Test
 
@@ -66,32 +95,38 @@ The following commands are all performed in the `api` directory.
 Generate AppMaps for tests.
 
 ```
-npx appmap-agent-js -- jest
+npm run test:appmap
 ```
 
-Build.
+Generate AppMaps for process.
 
 ```
-npm run build
-```
-
-Generate AppMaps for API code.
-
-```
-npx appmap-agent-js -- node -r dotenv/config build
+npm run preview:appmap
 ```
 
 Note: you may need to remove the last line `//# sourceMappingURL=library.js.map` from `node_modules/@prisma/client/runtime/library.js` due to [this bug](https://github.com/getappmap/appmap-agent-js/issues/221).
 
 ## Docker
 
-1. Install [Docker](https://docs.docker.com/engine/install/) for your platform
-2. Kill `npm run dev` running in the `app` and `api` directories
-3. Build and start with docker compose:
+First, kill `npm run dev` if still running in the `app` and `api`.
+
+Create a top-level `.env`.
 
 ```
-$ cd url-shortener
+cp .env.example .env
+```
+
+Build and start with docker compose:
+
+```
 $ docker compose up -- build
 ```
 
-[Open in browser](http://127.0.0.1:3000)
+Run the database migration.
+
+```
+$ cd api
+$ npm run migrate:dev
+```
+
+Open http://127.0.0.1:3000
