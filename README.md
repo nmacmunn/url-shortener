@@ -39,7 +39,7 @@ $ docker pull postgres
 Start the database so we can run migrations in the next step.
 
 ```
-docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
+$ docker run -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
 ```
 
 ### API
@@ -76,7 +76,9 @@ With the database running, start `npm run dev` in each of the `api` and `app` fo
 
 ## Test
 
-Run API tests
+The following commands are performed in the `api` directory.
+
+Run API tests.
 
 ```
 $ npm test
@@ -90,30 +92,32 @@ $ npm run test:watch
 
 ## API AppMap
 
-The following commands are all performed in the `api` directory.
+The following commands are performed in the `api` directory.
 
 Generate AppMaps for tests.
 
 ```
-npm run test:appmap
+$ npm run test:appmap
 ```
 
-Generate AppMaps for process.
+To generate AppMaps for the API process, first kill `npm run dev` if it's running in `api` and then run:
 
 ```
-npm run preview:appmap
+$ npm run preview:appmap
 ```
 
 Note: you may need to remove the last line `//# sourceMappingURL=library.js.map` from `node_modules/@prisma/client/runtime/library.js` due to [this bug](https://github.com/getappmap/appmap-agent-js/issues/221).
 
+Now, with `npm run dev` running in `app`, open http://127.0.0.1:3000 and exercise user workflows.
+
 ## Docker
 
-First, kill `npm run dev` if still running in the `app` and `api`.
+First, kill `npm run dev` if it's still running in `app` or `api` and stop the postgres container.
 
 Create a top-level `.env`.
 
 ```
-cp .env.example .env
+$ cp .env.example .env
 ```
 
 Build and start with docker compose:
