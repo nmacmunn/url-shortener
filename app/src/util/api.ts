@@ -45,7 +45,7 @@ export async function createLink(url: string, slug: string): Promise<Link | { er
     });
     return response.json();
   } catch (e) {
-    return { error: `Failed to increment views: ${e}` };
+    return { error: `Failed to create link: ${e}` };
   }
 }
 
