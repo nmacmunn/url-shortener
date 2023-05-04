@@ -1,5 +1,7 @@
 # URL Shortener
 
+## [Try the live demo](http://lilurl.ddns.net)
+
 A simple URL shortener featuring:
 
 - Custom slugs (aliases)
@@ -134,3 +136,35 @@ $ npm run migrate:dev
 ```
 
 Open http://127.0.0.1:3000
+
+## Deploying
+
+The [live demo](http://lilurl.ddns.net) was deployed on a single machine using this `docker-compose.yml`
+
+```
+version: "3.4"
+services:
+  app:
+    env_file:
+      - .env
+    image: nmacmunn/url-shortener-app
+    ports:
+      - "80:3000"
+    restart: unless-stopped
+  api:
+    env_file:
+      - .env
+    image: nmacmunn/url-shortener-api
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+  postgres:
+    env_file:
+      - .env
+    image: postgres
+    ports:
+      - "5432"
+    restart: unless-stopped
+```
+
+A single `.env` file is used to specify the environment for all three services.
