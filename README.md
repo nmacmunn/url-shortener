@@ -1,7 +1,5 @@
 # URL Shortener
 
-## [Try the live demo](http://lilurl.ddns.net)
-
 A simple URL shortener featuring:
 
 - Custom slugs (aliases)
@@ -139,7 +137,7 @@ Open http://127.0.0.1:3000
 
 ## Deploying
 
-The [live demo](http://lilurl.ddns.net) was deployed on a single machine using this `docker-compose.yml`
+Deploying on a single machine can be achieved using this `docker-compose.yml`
 
 ```
 version: "3.4"
